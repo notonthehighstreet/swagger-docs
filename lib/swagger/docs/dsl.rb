@@ -29,6 +29,10 @@ module Swagger
         @type = type
       end
 
+      def items(items)
+        @items = items
+      end
+
       def consumes(mime_types)
         @consumes = mime_types
       end
@@ -58,6 +62,7 @@ module Swagger
 
       def response(status, text = nil, model = nil)
         if status.is_a? Symbol
+          status = :ok if status == :success
           status_code = Rack::Utils.status_code(status)
           response_messages << {:code => status_code, :responseModel => model, :message => text || status.to_s.titleize}
         else
@@ -102,6 +107,12 @@ module Swagger
           description: description,
         }.merge!(hash)
         self.required << name if required == :required
+      end
+
+      # helper method to generate enums
+      def property_list(name, type, required, description = nil, allowed_values = [], hash = {})
+        hash.merge!({allowable_values: {value_type: "LIST", values: allowed_values}})
+        property(name, type, required, description, hash)
       end
     end
   end

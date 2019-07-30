@@ -10,6 +10,11 @@ Generates swagger-ui json files for rails apps with APIs. You add the swagger DS
 [gemnasium]: https://gemnasium.com/richhollis/swagger-docs
 [coveralls]: https://coveralls.io/r/richhollis/swagger-docs
 
+## Swagger Version Specification Support
+
+This project supports elements of the v1.2 swagger specification. It *does not* support the v2 specification. If you are looking for support for the newer specification the please see the [swagger-blocks](https://github.com/fotinakis/swagger-blocks/) project. I don't currently have any plans to add support for v2.0 at this time due to time constraints, but I'm open to accepting a PR on  this. Contact me if you are interested in helping with that effort - thanks!
+
+## Example usage
 
 Here is an extract of the DSL from a user controller API class:
 
@@ -57,6 +62,8 @@ Swagger::Docs::Config.register_apis({
     :base_path => "http://api.somedomain.com",
     # if you want to delete all .json files at each generation
     :clean_directory => false,
+    # Ability to setup base controller for each api version. Api::V1::SomeController for example.
+    :parent_controller => Api::V1::SomeController,
     # add custom attributes to api-docs
     :attributes => {
       :info => {
@@ -105,8 +112,8 @@ The following table shows all the current configuration options and their defaul
 </tr>
 
 <tr>
-<td><b>base_api_controller</b></td>
-<td>The base controller class your project uses; it or its subclasses will be where you call swagger_controller and swagger_api.</td>
+<td><b>base_api_controller / base_api_controllers</b></td>
+<td>The base controller class your project uses; it or its subclasses will be where you call swagger_controller and swagger_api. An array of base controller classes may be provided.</td>
 <td>ActionController::Base</td>
 </tr>
 
@@ -126,6 +133,12 @@ The following table shows all the current configuration options and their defaul
 <td><b>camelize_model_properties</b></td>
 <td>Camelizes property names of models. For example, a property name called first_name would be converted to firstName.</td>
 <td>true</td>
+</tr>
+
+<tr>
+<td><b>parent_controller</b></td>
+<td>Assign a different controller to use for the configuration</td>
+<td></td>
 </tr>
 
 </tbody>
@@ -152,7 +165,7 @@ class Api::V1::UsersController < ApplicationController
   swagger_api :show do
     summary "Fetches a single User item"
     param :path, :id, :integer, :optional, "User Id"
-    response :success, "Success", :User
+    response :ok, "Success", :User
     response :unauthorized
     response :not_acceptable
     response :not_found
@@ -193,9 +206,23 @@ class Api::V1::UsersController < ApplicationController
     description "A Tag object."
     property :id, :integer, :required, "User Id"
     property :name, :string, :optional, "Name"
+    property_list :type, :string, :optional, "Tag Type", ["info", "warning", "error"]
   end
-
 end
+```
+
+#### Support for Enums (PR #108)
+
+```
+property_list :type, :string, :optional, "Type", ["info", "warning", "error"]
+```
+
+#### Custom resource paths`(PR #126)
+
+```ruby
+class Api::V1::UsersController < ApplicationController
+
+  swagger_controller :users, "User Management", resource_path: "/some/where"
 ```
 
 ### DRYing up common documentation
@@ -227,6 +254,39 @@ end
 ```
 
 And then use it as a superclass to all you API controllers. All the subclassed controllers will have the same documentation applied to them.
+
+#### Alternate method
+
+Using a block for the swagger_api definition:
+
+```ruby
+class Api::V1::UserController < Api::V1::BaseController
+
+  swagger_controller :user, "Users"
+
+  def self.add_common_params(api)
+    api.param :form, "user[first_name]", :string, :optional, "Notes"
+    api.param :form, "user[last_name]", :string, :optional, "Name"
+    api.param :form, "user[email]", :string, :optional, "Email"
+  end
+
+  swagger_api :create do |api|
+    summary "Create a new User item"
+    Api::V1::UserController::add_common_params(api)
+    response :unauthorized
+    response :not_acceptable
+    response :unprocessable_entity
+  end
+  
+  swagger_api :update do |api|
+    summary "Update an existing User item"
+    Api::V1::UserController::add_common_params(api)
+    response :unauthorized
+    response :not_acceptable
+    response :unprocessable_entity
+  end
+end
+```
 
 ### DSL Methods
 
@@ -673,6 +733,9 @@ Thanks to jdar, fotinakis, stevschmid, ldnunes, aaronrenner and all of our contr
 ## Related Projects
 
 **[@fotinakis](https://github.com/fotinakis/)** has created Swagger::Blocks - a DSL for pure Ruby code blocks: [swagger-blocks](https://github.com/fotinakis/swagger-blocks/)
+
+A [cors rack middleware for testing swagger apis](https://gist.github.com/richhollis/b98a8b0599860145ad86) designed to be used in Rails development environments.
+
 
 ## More About Me
 

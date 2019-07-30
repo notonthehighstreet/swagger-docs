@@ -1,6 +1,46 @@
-## 0.1.10
+## 0.2.9
 
-Additional logging for generation failures (suggested in #81)
+Fix gem dependencies to support Rails 5 #141
+
+## 0.2.8
+
+Accept success status (#134) - thanks to @dcarneiro
+
+## 0.2.7
+
+- Fix issue "NoMethodError: undefined method `<' for false:FalseClass" (#133) - thanks to @heaven
+
+## 0.2.6
+
+- swagger_controller DSL can accept a resource_path which will be used over a generated path #126 @sb8244
+
+## 0.2.5
+
+- Enabled option to set 'items' inside swagger_api method #99 @krakatoa
+
+## 0.2.4
+
+- Parent controller option for register_apis config. #123 @mskubenich
+
+## 0.2.3
+
+- Added property_list to SwaggerModelDSL #108 @dr-impossible
+
+## 0.2.2
+
+- Support multiple route methods #128 @frodrigo
+
+## 0.2.1
+
+- Add support for Authorizations (OAuth 2.0) - Thanks to @RKushnir #97
+
+## 0.2.0
+
+- Additional logging for generation failures (suggested in #81)
+- Added api_file_name to config #88
+- Add support for multiple base api controllers. #93
+- Change success status to ok #89
+- Address issue with missing slashes - remove trailing slash from base paths and add slash before api paths #117
 
 ## 0.1.9
 

@@ -41,7 +41,7 @@ module Swagger
       end
 
       def resource_path
-        demod
+        metadata.overridden_resource_path || demod
       end
 
       def resource_file_path
@@ -50,6 +50,10 @@ module Swagger
 
       def models
         normalize_model_properties @models
+      end
+
+      def authorizations
+        metadata.authorizations
       end
 
       private
@@ -61,7 +65,8 @@ module Swagger
           "basePath" => base_path,
           "resourcePath" => resource_path,
           "apis" => apis,
-          "resourceFilePath" => resource_file_path
+          "resourceFilePath" => resource_file_path,
+          "authorizations"   => authorizations
         }
       end
 
