@@ -2,9 +2,9 @@
 
 Generates swagger-ui json files for rails apps with APIs. You add the swagger DSL to your controller classes and then run one rake task to generate the json files.
 
-[![Gem Version](https://badge.fury.io/rb/swagger-docs.svg)][gem]
-[![Dependency Status](https://gemnasium.com/richhollis/swagger-docs.svg?travis)][gemnasium]
-
+[![Build Status](https://travis-ci.org/notonthehighstreet/swagger-docs.svg?branch=master)](https://travis-ci.org/notonthehighstreet/swagger-docs)
+[![Depfu](https://badges.depfu.com/badges/5f2f21e296deabe50a1f6b8b448685be/overview.svg)](https://depfu.com/github/notonthehighstreet/swagger-docs?project_id=5029)
+[![Depfu](https://badges.depfu.com/badges/5f2f21e296deabe50a1f6b8b448685be/count.svg)](https://depfu.com/github/notonthehighstreet/swagger-docs?project_id=5029)
 
 ## Swagger Version Specification Support
 
