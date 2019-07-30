@@ -2,13 +2,8 @@
 
 Generates swagger-ui json files for rails apps with APIs. You add the swagger DSL to your controller classes and then run one rake task to generate the json files.
 
-[![Gem Version](https://badge.fury.io/rb/swagger-docs.png)][gem]
-[![Dependency Status](https://gemnasium.com/richhollis/swagger-docs.png?travis)][gemnasium]
+[![Build Status](https://travis-ci.org/notonthehighstreet/swagger-docs.svg?branch=master)](https://travis-ci.org/notonthehighstreet/swagger-docs)
 
-[gem]: https://rubygems.org/gems/swagger-docs
-[travis]: http://travis-ci.org/richhollis/swagger-docs
-[gemnasium]: https://gemnasium.com/richhollis/swagger-docs
-[coveralls]: https://coveralls.io/r/richhollis/swagger-docs
 
 ## Swagger Version Specification Support
 
@@ -277,7 +272,7 @@ class Api::V1::UserController < Api::V1::BaseController
     response :not_acceptable
     response :unprocessable_entity
   end
-  
+
   swagger_api :update do |api|
     summary "Update an existing User item"
     Api::V1::UserController::add_common_params(api)
@@ -384,7 +379,7 @@ end
 ```
 
 If you want swagger to find controllers in `Rails.application` and/or multiple
-engines you can override `base_application` to return an array. 
+engines you can override `base_application` to return an array.
 
 ```ruby
 class Swagger::Docs::Config
