@@ -90,7 +90,7 @@ describe Swagger::Docs::Generator do
             :api_file_name => api_file_name }
         }}
         let(:file_resources) { tmp_dir + api_file_name }
-        specify { expect(File.exists? file_resources).to be true }
+        specify { expect(File.exist? file_resources).to be true }
       end
     end
     context "resource file" do
