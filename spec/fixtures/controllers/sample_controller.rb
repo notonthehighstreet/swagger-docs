@@ -12,7 +12,7 @@ module Api
         response :ok, "Some text", :Tag
         response :unauthorized
         response :not_acceptable, "The request you made is not acceptable"
-        response :requested_range_not_satisfiable
+        response :range_not_satisfiable
       end
 
       swagger_api :show do
