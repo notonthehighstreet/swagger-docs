@@ -62,6 +62,8 @@ GEM
     mutex_m (0.3.0)
     nokogiri (1.19.4-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.19.4-x86_64-linux-gnu)
+      racc (~> 1.4)
     prism (1.9.0)
     racc (1.8.1)
     rack (2.2.24)
@@ -103,6 +105,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-25
+  x86_64-linux
 
 DEPENDENCIES
   actionpack (~> 7.0.8)
