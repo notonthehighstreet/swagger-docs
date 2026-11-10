@@ -4,6 +4,6 @@ source 'https://rubygems.org'
 gemspec
 
 # Development only: test against the Rails line mononoth runs. The gemspec stays at ">= 3".
-gem "railties", "~> 7.0.8"
-gem "actionpack", "~> 7.0.8"
-gem "activesupport", "~> 7.0.8"
+gem "railties", "~> 8.1.4"
+gem "actionpack", "~> 8.1.4"
+gem "activesupport", "~> 8.1.4"
